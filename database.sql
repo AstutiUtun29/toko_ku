@@ -6,5 +6,6 @@ CREATE TABLE IF NOT EXISTS pesanan (
     nama_pembeli VARCHAR(100),
     nomor_hp VARCHAR(20),
     alamat TEXT,
+    warna VARCHAR(20),
     waktu_pesan TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

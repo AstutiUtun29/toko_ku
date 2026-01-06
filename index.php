@@ -13,8 +13,9 @@ if (isset($_POST['submit_pesan'])) {
     $nama   = mysqli_real_escape_string($koneksi, $_POST['nama_pembeli']);
     $hp     = mysqli_real_escape_string($koneksi, $_POST['nomor_hp']);
     $alamat = mysqli_real_escape_string($koneksi, $_POST['alamat']);
+    $warna  = mysqli_real_escape_string($koneksi, $_POST['warna']);
 
-    $simpan = mysqli_query($koneksi, "INSERT INTO pesanan (nama_pembeli, nomor_hp, alamat) VALUES ('$nama', '$hp', '$alamat')");
+    $simpan = mysqli_query($koneksi, "INSERT INTO pesanan (nama_pembeli, nomor_hp, alamat, warna) VALUES ('$nama', '$hp', '$alamat', '$warna')");
     
     if ($simpan) {
         echo "<script>alert('Pesanan Berhasil! Mohon tunggu, Admin akan menghubungi Anda via WhatsApp untuk konfirmasi pembayaran.'); window.location='index.php';</script>";
@@ -213,6 +214,42 @@ if (isset($_POST['submit_pesan'])) {
             gap: 15px;
         }
 
+        /* Color Selection Styling */
+        .color-options {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .color-option {
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .color-option input {
+            display: none;
+        }
+        
+        .color-circle {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: block;
+            border: 3px solid transparent;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .color-option input:checked + .color-circle {
+            transform: scale(1.1);
+            border-color: #2d3436;
+        }
+
+        .bg-pink { background-color: #ffcccc; }
+        .bg-blue { background-color: #4a69bd; }
+        .bg-black { background-color: #2d3436; }
+        .bg-abu { background-color: #636e72; }
+
         @media (max-width: 768px) {
             .main-wrapper {
                 flex-direction: column;
@@ -265,6 +302,24 @@ if (isset($_POST['submit_pesan'])) {
             </div>
 
             <div class="form-group">
+                <label>Pilih Warna</label>
+                <div class="color-options">
+                    <label class="color-option">
+                        <input type="radio" name="warna" value="Hitam" checked onchange="gantiGambar('hitam')">
+                        <span class="color-circle bg-black" title="Hitam Matte"></span>
+                    </label>
+                    <label class="color-option">
+                        <input type="radio" name="warna" value="Pink" onchange="gantiGambar('pink')">
+                        <span class="color-circle bg-pink" title="Soft Pink"></span>
+                    </label>
+                    <label class="color-option">
+                        <input type="radio" name="warna" value="Abu-abu" onchange="gantiGambar('abu')">
+                        <span class="color-circle bg-abu" title="Abu-abu Matte"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <label>Alamat Pengiriman</label>
                 <textarea name="alamat" rows="3" placeholder="Jalan, No. Rumah, Kecamatan, Kota..." required></textarea>
             </div>
@@ -282,4 +337,19 @@ if (isset($_POST['submit_pesan'])) {
 </div>
 
 </body>
+<script>
+    function gantiGambar(warna) {
+        var img = document.querySelector('.product-img');
+        if (warna === 'pink') {
+            img.src = 'produk_pink.png';
+            document.querySelector('.price-tag').style.background = '#ff9ff3';
+        } else if (warna === 'abu') {
+            img.src = 'produk_abu.png';
+            document.querySelector('.price-tag').style.background = '#636e72';
+        } else {
+            img.src = 'produk_hitam.png'; // Ganti dengan gambar default/hitam
+            document.querySelector('.price-tag').style.background = '#2d3436';
+        }
+    }
+</script>
 </html>

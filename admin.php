@@ -209,9 +209,10 @@ $result = mysqli_query($koneksi, "SELECT * FROM pesanan ORDER BY waktu_pesan DES
                     <th width="5%">ID</th>
                     <th width="15%">Tanggal</th>
                     <th width="20%">Nama Pembeli</th>
+                    <th width="10%">Warna</th>
                     <th width="15%">Nomor HP</th>
                     <th width="25%">Alamat</th>
-                    <th width="20%">Aksi</th>
+                    <th width="10%">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -228,6 +229,7 @@ $result = mysqli_query($koneksi, "SELECT * FROM pesanan ORDER BY waktu_pesan DES
                         $pesan_admin = "Halo " . $row['nama_pembeli'] . ", terima kasih sudah memesan di Toko Botol Pintar.\n\n" . 
                                        "Berikut rincian pesanan kakak:\n" .
                                        "Item: 1x Smart Tumbler LED\n" .
+                                       "Warna: " . ($row['warna'] ? $row['warna'] : '-') . "\n" .
                                        "Alamat: " . $row['alamat'] . "\n\n" .
                                        "Rincian Biaya:\n" .
                                        "- Harga: Rp 149.000\n" .
@@ -240,6 +242,7 @@ $result = mysqli_query($koneksi, "SELECT * FROM pesanan ORDER BY waktu_pesan DES
                         <td>#<?php echo $row['id']; ?></td>
                         <td><div class="date-info"><?php echo date('d M Y H:i', strtotime($row['waktu_pesan'])); ?></div></td>
                         <td><div class="customer-name"><?php echo htmlspecialchars($row['nama_pembeli']); ?></div></td>
+                        <td><span class="badge-color"><?php echo htmlspecialchars($row['warna']); ?></span></td>
                         <td><div class="customer-phone"><?php echo $row['nomor_hp']; ?></div></td>
                         <td><?php echo htmlspecialchars($row['alamat']); ?></td>
                         <td>
@@ -260,7 +263,7 @@ $result = mysqli_query($koneksi, "SELECT * FROM pesanan ORDER BY waktu_pesan DES
                     <?php endwhile; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="6" class="empty-state">
+                        <td colspan="7" class="empty-state">
                             <i class="far fa-folder-open"></i>
                             <p>Belum ada pesanan yang masuk hari ini.</p>
                         </td>
