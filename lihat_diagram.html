@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagram Presentasi - Toko Botol Pintar</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .diagram-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 50px;
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            color: #2563eb;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #e2e8f0;
+            padding-bottom: 10px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .mermaid {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .instruction {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            font-size: 14px;
+            color: #856404;
+            max-width: 900px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="instruction">
+        <strong>💡 Tips Presentasi:</strong> Kakak bisa langsung <strong>Screenshot</strong> diagram di bawah ini satu
+        per satu lalu masukkan ke slide PowerPoint kakak agar terlihat sangat jelas dan profesional.
+    </div>
+
+    <!-- 1. Use Case Diagram -->
+    <div class="diagram-container">
+        <h2>1. Use Case Diagram (Alur Aktor)</h2>
+        <div class="mermaid">
+            graph LR
+            %% Styling
+            classDef actorStyle fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
+            classDef usecaseStyle fill:#fff,stroke:#2563eb,stroke-width:2px;
+
+            subgraph "Sistem Toko Botol Pintar"
+            UC1((Melihat Katalog Produk)):::usecaseStyle
+            UC2((Input Form Pemesanan)):::usecaseStyle
+            UC3((Preview Daftar Pesanan)):::usecaseStyle
+            UC4((Hapus Data Pesanan)):::usecaseStyle
+            UC5((Konfirmasi via WhatsApp)):::usecaseStyle
+            UC6((Cetak Struk Pesanan)):::usecaseStyle
+            end
+
+            P[Pembeli]:::actorStyle --> UC1
+            P --> UC2
+            A[Admin]:::actorStyle --> UC3
+            A --> UC4
+            A --> UC5
+            A --> UC6
+        </div>
+    </div>
+
+    <!-- 2. ERD -->
+    <div class="diagram-container">
+        <h2>2. Entity Relationship Diagram (ERD)</h2>
+        <div class="mermaid">
+            erDiagram
+            PESANAN {
+            int id PK "Primary Key"
+            string nama_pembeli "Data Pelanggan"
+            string nomor_hp "Data Pelanggan"
+            text alamat "Data Pelanggan"
+            string warna "Varian Produk"
+            timestamp waktu_pesan "Catatan Waktu"
+            }
+        </div>
+    </div>
+
+    <!-- 3. Sequence Diagram -->
+    <div class="diagram-container">
+        <h2>3. Sequence Diagram (Hapus Transaksi)</h2>
+        <div class="mermaid">
+            sequenceDiagram
+            autonumber
+            participant Admin
+            participant UI as Browser (Admin Page)
+            participant Lib as SweetAlert2
+            participant Server as PHP Logic
+            participant DB as MySQL Database
+
+            Admin->>UI: Klik Icon Sampah (Hapus)
+            UI->>Lib: Muncul dialog konfirmasi
+            Note over Lib: Dialog Modern & Interaktif
+            Admin->>Lib: Klik "Ya, Hapus!"
+            Lib->>Server: Request: admin.php?hapus={id}
+            Server->>DB: SQL: DELETE FROM pesanan
+            DB-->>Server: Status: OK
+            Server-->>UI: Redirect (status=deleted)
+            UI->>Lib: Tampil Notifikasi "Berhasil!"
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            flowchart: { curve: 'basis' }
+        });
+    </script>
+</body>
+
+</html>
