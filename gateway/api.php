@@ -1,5 +1,5 @@
 <?php
-// API Gateway Logic
+// API Gateway Logic  
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 

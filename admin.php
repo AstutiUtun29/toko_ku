@@ -12,13 +12,15 @@ if (mysqli_connect_errno()) {
 if (isset($_GET['hapus'])) {
     $id_hapus = mysqli_real_escape_string($koneksi, $_GET['hapus']);
     mysqli_query($koneksi, "DELETE FROM pesanan WHERE id = '$id_hapus'");
-    echo "<script>alert('Data pesanan berhasil dihapus!'); window.location='admin.php';</script>";
+    header("Location: admin.php?status=deleted");
+    exit();
 }
 
 // Logika Hapus Semua Pesanan
 if (isset($_GET['hapus_semua'])) {
     mysqli_query($koneksi, "TRUNCATE TABLE pesanan");
-    echo "<script>alert('Semua riwayat pesanan berhasil dihapus!'); window.location='admin.php';</script>";
+    header("Location: admin.php?status=all_deleted");
+    exit();
 }
 
 $result = mysqli_query($koneksi, "SELECT * FROM pesanan ORDER BY waktu_pesan DESC");
@@ -32,6 +34,7 @@ $result = mysqli_query($koneksi, "SELECT * FROM pesanan ORDER BY waktu_pesan DES
     <title>Admin Dashboard - Toko Botol Pintar</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         :root {
             --primary-color: #4a90e2;
@@ -193,7 +196,7 @@ $result = mysqli_query($koneksi, "SELECT * FROM pesanan ORDER BY waktu_pesan DES
     <div class="header">
         <h1><i class="fas fa-boxes"></i> Pesanan Masuk</h1>
         <div class="header-actions">
-            <a href="admin.php?hapus_semua=true" class="btn btn-delete-all" onclick="return confirm('PERINGATAN: Apakah Anda yakin ingin menghapus SEMUA riwayat pesanan? Data yang dihapus tidak bisa dikembalikan!');">
+            <a href="#" class="btn btn-delete-all" onclick="hapusSemua(); return false;">
                 <i class="fas fa-trash"></i> Hapus Semua
             </a>
             <button onclick="window.location.reload();" class="btn btn-refresh">
@@ -255,7 +258,7 @@ $result = mysqli_query($koneksi, "SELECT * FROM pesanan ORDER BY waktu_pesan DES
                             <a href="#" onclick="kirimResi('<?php echo $nomor_hp; ?>', '<?php echo addslashes($row['nama_pembeli']); ?>'); return false;" class="btn-action btn-resi" title="Kirim Resi">
                                 <i class="fas fa-truck"></i>
                             </a>
-                            <a href="admin.php?hapus=<?php echo $row['id']; ?>" class="btn-action btn-del" title="Hapus Pesanan" onclick="return confirm('Yakin ingin menghapus pesanan atas nama <?php echo htmlspecialchars($row['nama_pembeli']); ?>?');">
+                            <a href="#" class="btn-action btn-del" title="Hapus Pesanan" onclick="hapusSatu(<?php echo $row['id']; ?>, '<?php echo addslashes(htmlspecialchars($row['nama_pembeli'])); ?>'); return false;">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
                         </td>
@@ -284,6 +287,66 @@ $result = mysqli_query($koneksi, "SELECT * FROM pesanan ORDER BY waktu_pesan DES
             var link = "https://wa.me/" + nomorHp + "?text=" + encodeURIComponent(pesan);
             window.open(link, '_blank');
         }
+    }
+
+    function hapusSatu(id, nama) {
+        Swal.fire({
+            title: 'Hapus Pesanan?',
+            text: "Pesanan atas nama " + nama + " akan dihapus permanen.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#e74c3c',
+            cancelButtonColor: '#7f8c8d',
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = 'admin.php?hapus=' + id;
+            }
+        })
+    }
+
+    function hapusSemua() {
+        Swal.fire({
+            title: 'Hapus Semua Pesanan?',
+            text: "PERINGATAN: Semua riwayat pesanan akan dihapus dan tidak bisa dikembalikan!",
+            icon: 'error',
+            showCancelButton: true,
+            confirmButtonColor: '#e74c3c',
+            cancelButtonColor: '#7f8c8d',
+            confirmButtonText: 'Ya, Hapus Semua!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = 'admin.php?hapus_semua=true';
+            }
+        })
+    }
+
+    // Tampilkan notifikasi jika ada status dari URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status');
+    
+    if (status === 'deleted') {
+        Swal.fire({
+            title: 'Terhapus!',
+            text: 'Data pesanan berhasil dihapus.',
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false
+        });
+        // Bersihkan URL tanpa refresh
+        window.history.replaceState({}, document.title, "admin.php");
+    } else if (status === 'all_deleted') {
+        Swal.fire({
+            title: 'Berhasil!',
+            text: 'Semua riwayat pesanan telah dibersihkan.',
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false
+        });
+        // Bersihkan URL tanpa refresh
+        window.history.replaceState({}, document.title, "admin.php");
     }
 </script>
 

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposal Teknis - Toko Botol Pintar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-page: #f8fafc;
+            --bg-card: #ffffff;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-page);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: var(--bg-card);
+            padding: 60px 80px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .container {
+                box-shadow: none;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+                padding: 10mm;
+            }
+
+            .no-print {
+                display: none;
+            }
+
+            h2,
+            h3 {
+                page-break-after: avoid;
+            }
+
+            .mermaid,
+            .feature-box {
+                page-break-inside: avoid;
+            }
+
+            section {
+                page-break-inside: auto;
+            }
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 3px solid var(--primary-color);
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin: 0;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .meta-info {
+            margin-top: 10px;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        h2 {
+            border-left: 5px solid var(--primary-color);
+            padding-left: 15px;
+            margin-top: 40px;
+            font-size: 24px;
+            color: #0f172a;
+        }
+
+        h3 {
+            color: #334155;
+            margin-top: 25px;
+            font-size: 18px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul {
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .mermaid {
+            background: #fff;
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin: 30px 0;
+            display: flex;
+            justify-content: center;
+            overflow: visible;
+        }
+
+        .mermaid svg {
+            max-width: 100% !important;
+            height: auto !important;
+        }
+
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            z-index: 9999;
+        }
+
+        .print-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+        }
+
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            color: var(--text-light);
+            font-size: 14px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+
+        .feature-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+
+        .feature-title {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <button class="print-btn no-print" onclick="window.print()">Cetak / Simpan PDF</button>
+
+    <div class="container">
+        <div class="header">
+            <h1>Proposal & Dokumen Teknis</h1>
+            <div class="meta-info">Sistem Informasi Pemesanan "Toko Botol Pintar"</div>
+            <div style="font-size: 0.9em; margin-top: 5px;">Disusun Oleh: [Nama Anda / Matildis Astuti Utun]</div>
+        </div>
+
+        <section>
+            <h2>1. Pendahuluan</h2>
+            <h3>1.1 Latar Belakang</h3>
+            <p>Di era digital saat ini, efisiensi dalam manajemen pesanan sangat krusial bagi pelaku UMKM. "Toko Botol
+                Pintar" adalah sebuah platform e-commerce sederhana yang berfokus pada penjualan <i>Smart Tumbler
+                    LED</i>. Sebelumnya, proses pencatatan pesanan dilakukan secara manual atau semi-digital yang rentan
+                terhadap kesalahan data dan lambat dalam respon pelanggan. Proyek ini bertujuan untuk mendigitalisasi
+                proses tersebut mulai dari pemesanan oleh pelanggan hingga pengelolaan data oleh admin.</p>
+
+            <h3>1.2 Rumusan Masalah</h3>
+            <ul>
+                <li>Bagaimana memudahkan pelanggan dalam memilih varian produk dan melakukan pemesanan secara cepat?
+                </li>
+                <li>Bagaimana admin dapat mengelola daftar pesanan dengan efisien, termasuk fitur penghapusan data yang
+                    aman dan modern?</li>
+                <li>Bagaimana mengintegrasikan sistem pemesanan dengan platform komunikasi (WhatsApp) untuk konfirmasi
+                    pesanan?</li>
+            </ul>
+
+            <h3>1.3 Tujuan Proyek</h3>
+            <ul>
+                <li>Membangun antarmuka pemesanan yang responsif dan interaktif bagi pelanggan.</li>
+                <li>Menyediakan dashboard admin untuk manajemen data pesanan yang dilengkapi dengan fitur Create, Read,
+                    and Delete (CRUD).</li>
+                <li>Mengimplementasikan fitur konfirmasi otomatis melalui WhatsApp API.</li>
+                <li>Meningkatkan pengalaman pengguna (UX) dengan sistem notifikasi pop-up menggunakan SweetAlert2.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>2. Analisis Kebutuhan Sistem</h2>
+            <h3>2.1 Perangkat Lunak (Software)</h3>
+            <ul>
+                <li><strong>Sistem Operasi:</strong> Windows 10/11</li>
+                <li><strong>Bundling Server:</strong> XAMPP v3.3.0 (Apache & MariaDB)</li>
+                <li><strong>Bahasa Pemrograman:</strong> PHP 8.1+ (Back-end), JavaScript ES6 (Front-end)</li>
+                <li><strong>Database:</strong> MySQL/MariaDB</li>
+                <li><strong>Library:</strong> SweetAlert2, Font Awesome, Google Fonts</li>
+            </ul>
+
+            <h3>2.2 Perangkat Keras (Hardware)</h3>
+            <ul>
+                <li><strong>Processor:</strong> Intel Core i3 (atau setara)</li>
+                <li><strong>Memory:</strong> RAM 4GB</li>
+                <li><strong>Storage:</strong> SSD/HDD minimal 500MB ruang bebas</li>
+                <li><strong>Display:</strong> Monitor resolusi minimal 1366x768</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>3. Perancangan Sistem</h2>
+            <h3>3.1 Use Case Diagram (Alur Aktor)</h3>
+            <div class="mermaid">
+                graph LR
+                subgraph "Sistem Toko Botol Pintar"
+                UC1((Melihat Katalog Produk))
+                UC2((Input Form Pemesanan))
+                UC3((Preview Daftar Pesanan))
+                UC4((Hapus Data Pesanan))
+                UC5((Konfirmasi via WhatsApp))
+                UC6((Cetak Struk Pesanan))
+                end
+
+                P[Pembeli] --> UC1
+                P[Pembeli] --> UC2
+                A[Admin] --> UC3
+                A[Admin] --> UC4
+                A[Admin] --> UC5
+                A[Admin] --> UC6
+            </div>
+            <h3>3.2 Entity Relationship Diagram (ERD)</h3>
+            <div class="mermaid">
+                erDiagram
+                PESANAN {
+                int id PK
+                string nama_pembeli
+                string nomor_hp
+                text alamat
+                string warna
+                timestamp waktu_pesan
+                }
+            </div>
+
+            <h3>3.3 Sequence Diagram (Proses Hapus Pesanan)</h3>
+            <div class="mermaid">
+                sequenceDiagram
+                participant Admin
+                participant UI as Browser (Admin Page)
+                participant Lib as SweetAlert2
+                participant Server as PHP Logic
+                participant DB as MySQL Database
+
+                Admin->>UI: Klik Icon Sampah (Hapus)
+                UI->>Lib: Munculkan Konfirmasi Dialog
+                Admin->>Lib: Klik "Ya, Hapus!"
+                Lib->>Server: Request: admin.php?hapus={id}
+                Server->>DB: SQL: DELETE FROM pesanan WHERE id={id}
+                DB-->>Server: Response: Sukses
+                Server-->>UI: Redirect (status=deleted)
+                UI->>Lib: Munculkan Notifikasi "Berhasil Dihapus!"
+            </div>
+        </section>
+
+        <section>
+            <h2>4. Implementasi Fitur Unggulan</h2>
+            <div class="feature-box">
+                <span class="feature-title">Varian Warna Dinamis</span>
+                <p>Pelanggan dapat melihat perubahan gambar produk secara real-time saat memilih warna (Hitam, Pink,
+                    Abu-abu), memberikan visualisasi yang akurat sebelum membeli.</p>
+            </div>
+            <div class="feature-box">
+                <span class="feature-title">Modern Deletion System</span>
+                <p>Proses penghapusan data dilengkapi dengan modal SweetAlert2. Hal ini mencegah penghapusan data yang
+                    tidak disengaja dan memberikan umpan balik visual yang menarik.</p>
+            </div>
+            <div class="feature-box">
+                <span class="feature-title">WhatsApp Integration</span>
+                <p>Sistem secara otomatis memformat pesan WhatsApp berdasarkan data pesanan, memudahkan komunikasi
+                    antara penjual dan pembeli.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>5. Penutup</h2>
+            <p>Sistem Informasi "Toko Botol Pintar" ini dirancang untuk menjawab tantangan efisiensi pada UMKM dalam
+                mengelola transaksi. Dengan antarmuka yang modern dan fitur manajemen data yang aman, diharapkan sistem
+                ini dapat meningkatkan produktivitas dan kepuasan pelanggan secara signifikan.</p>
+        </section>
+
+        <div class="footer">
+            &copy; 2026 Toko Botol Pintar - Digital Management System
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            securityLevel: 'loose',
+            flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' },
+            sequence: { useMaxWidth: true, showSequenceNumbers: true },
+            er: { useMaxWidth: true }
+        });
+    </script>
+</body>
+
+</html>
